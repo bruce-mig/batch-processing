@@ -22,7 +22,7 @@ public class StudentController {
     private final Job job;
 
     @PostMapping
-    public void importCsvToDBJob(){
+    public void exportCsvToDBJob(){
         JobParameters jobParameters = new JobParametersBuilder()
                 .addLong("startAt", System.currentTimeMillis())
                 .toJobParameters();
