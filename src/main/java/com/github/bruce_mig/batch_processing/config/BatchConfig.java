@@ -17,7 +17,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.PlatformTransactionManager;
+
+import java.util.Collections;
 
 @Configuration
 @RequiredArgsConstructor
@@ -33,6 +36,7 @@ public class BatchConfig {
         RepositoryItemReader<Student>  reader = new RepositoryItemReader<>();
         reader.setRepository(repository);
         reader.setMethodName("findAll");
+        reader.setSort(Collections.singletonMap("id", Sort.Direction.ASC));
         return  reader;
     }
 
@@ -82,7 +86,8 @@ public class BatchConfig {
         DelimitedLineAggregator<Student> aggregator = new DelimitedLineAggregator<>();
         BeanWrapperFieldExtractor<Student> fieldExtractor = new BeanWrapperFieldExtractor<>();
         aggregator.setDelimiter(",");
-        fieldExtractor.setNames(new String[]{"id","firstname", "lastname", "age"});
+        // Use the exact names of the properties in the Student class
+        fieldExtractor.setNames(new String[]{"id", "firstName", "lastName", "age"});
 
         aggregator.setFieldExtractor(fieldExtractor);
 
