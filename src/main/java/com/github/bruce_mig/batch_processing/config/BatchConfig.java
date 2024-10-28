@@ -51,6 +51,7 @@ public class BatchConfig {
         FlatFileItemWriter<Student> writer = new FlatFileItemWriter<>();
         writer.setResource(new FileSystemResource("csv_output.csv"));
         writer.setName("csvWriter");
+        writer.setHeaderCallback(writer1 -> writer1.write("id,first_name,last_name,age")); // optionally set heads
         writer.setLineAggregator(lineAggregator());
         return writer;
     }
